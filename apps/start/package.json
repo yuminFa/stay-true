@@ -1,50 +1,50 @@
 {
-  "name": "@stay-true/start",
-  "version": "0.0.1",
-  "private": true,
-  "nx": {
-    "targets": {
-      "build": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "webpack-cli build",
-          "args": [
-            "--node-env=production"
-          ]
-        },
-        "configurations": {
-          "development": {
-            "args": [
-              "--node-env=development"
-            ]
-          }
+    "name": "@stay-true/start",
+    "version": "0.0.1",
+    "private": true,
+    "nx": {
+        "targets": {
+            "build": {
+                "executor": "nx:run-commands",
+                "options": {
+                    "command": "webpack-cli build",
+                    "args": [
+                        "--node-env=production"
+                    ]
+                },
+                "configurations": {
+                    "development": {
+                        "args": [
+                            "--node-env=development"
+                        ]
+                    }
+                }
+            },
+            "serve": {
+                "continuous": true,
+                "executor": "@nx/js:node",
+                "defaultConfiguration": "development",
+                "dependsOn": [
+                    "build"
+                ],
+                "options": {
+                    "buildTarget": "@stay-true/start:build",
+                    "runBuildTargetDependencies": false
+                },
+                "configurations": {
+                    "development": {
+                        "buildTarget": "@stay-true/start:build:development"
+                    },
+                    "production": {
+                        "buildTarget": "@stay-true/start:build:production"
+                    }
+                }
+            },
+            "test": {
+                "options": {
+                    "passWithNoTests": true
+                }
+            }
         }
-      },
-      "serve": {
-        "continuous": true,
-        "executor": "@nx/js:node",
-        "defaultConfiguration": "development",
-        "dependsOn": [
-          "build"
-        ],
-        "options": {
-          "buildTarget": "@stay-true/start:build",
-          "runBuildTargetDependencies": false
-        },
-        "configurations": {
-          "development": {
-            "buildTarget": "@stay-true/start:build:development"
-          },
-          "production": {
-            "buildTarget": "@stay-true/start:build:production"
-          }
-        }
-      },
-      "test": {
-        "options": {
-          "passWithNoTests": true
-        }
-      }
     }
-  }
 }

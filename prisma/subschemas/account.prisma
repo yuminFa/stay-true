@@ -1,0 +1,33 @@
+model account {
+    id                Int             @id @default(autoincrement())
+    email             String          @unique(map: "email_unique")
+    password          String?         @db.VarChar()
+    name              String?         @db.VarChar()
+    roles             String?         @db.VarChar()
+    phone             String?         @db.VarChar()
+    address           String?         @db.VarChar()
+    signup_type       String          @db.VarChar()
+    refresh_token     String?         @db.VarChar()
+    last_contacted_at DateTime?
+    nick_name         String?         @db.VarChar()
+    status            String?         @db.VarChar()
+    gender            String?         @db.VarChar()
+    created_at        DateTime        @default(now())
+    updated_at        DateTime        @default(now())
+    social            account_social?
+}
+
+model account_social {
+    id                       Int      @id @default(autoincrement())
+    account_id               Int      @unique(map: "account_id_unique")
+    nick_name                String?  @db.VarChar()
+    social_name              String   @db.VarChar()
+    access_token             String?  @db.VarChar()
+    access_token_expired_in  Int?
+    refresh_token            String?  @db.VarChar()
+    refresh_token_expired_in Int?
+    token_type               String?  @db.VarChar()
+    created_at               DateTime @default(now())
+    updated_at               DateTime @default(now())
+    account                  account  @relation(fields: [account_id], references: [id])
+}

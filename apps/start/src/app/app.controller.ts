@@ -7,4 +7,8 @@ export class AppController {
     getData() {
         return { message: 'Hello world!' };
     }
+
+    getApiData() {
+        return { message: 'Hello API!' };
+    }
 }

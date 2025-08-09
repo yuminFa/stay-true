@@ -1,0 +1,48 @@
+//🧩Don't Edit this file.✨Generated in Sat Aug 09 2025 11:10:33 GMT+0900 (Korean Standard Time)✨
+model Account {
+  id              Int            @id @default(autoincrement())
+  email           String         @unique(map: "email_unique")
+  password        String?        @db.VarChar()
+  name            String?        @db.VarChar()
+  roles           String?        @db.VarChar()
+  phone           String?        @db.VarChar()
+  address         String?        @db.VarChar()
+  signupType      String         @map("signup_type") @db.VarChar()
+  refreshToken    String?        @map("refresh_token") @db.VarChar()
+  lastContactedAt DateTime?      @map("last_contacted_at")
+  nickName        String?        @map("nick_name") @db.VarChar()
+  status          String?        @db.VarChar()
+  gender          String?        @db.VarChar()
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @default(now()) @map("updated_at")
+  social          AccountSocial?
+
+  @@map("account")
+}
+
+model AccountSocial {
+  id                    Int      @id @default(autoincrement())
+  accountId             Int      @unique(map: "account_id_unique") @map("account_id")
+  nickName              String?  @map("nick_name") @db.VarChar()
+  socialName            String   @map("social_name") @db.VarChar()
+  accessToken           String?  @map("access_token") @db.VarChar()
+  accessTokenExpiredIn  Int?     @map("access_token_expired_in")
+  refreshToken          String?  @map("refresh_token") @db.VarChar()
+  refreshTokenExpiredIn Int?     @map("refresh_token_expired_in")
+  tokenType             String?  @map("token_type") @db.VarChar()
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @default(now()) @map("updated_at")
+  account               Account  @relation(fields: [accountId], references: [id])
+
+  @@map("account_social")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
